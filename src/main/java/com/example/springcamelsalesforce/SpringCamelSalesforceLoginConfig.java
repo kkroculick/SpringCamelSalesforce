@@ -9,23 +9,28 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+// create a salesforce login config
 @Configuration
 public class SpringCamelSalesforceLoginConfig {
 
-    //@Value("${}")
-    // private String username;
+    /* salesforce supports three different ways of login
+    https://help.salesforce.com/s/articleView?id=sf.connected_app_manage.htm&type=5
+    */
 
-    //@Value("${}")
-    //private String password;
+    /*
+     @Value("${}")
+     private String username;
+     @Value("${}")
+     private String password;
+     @Value("${SF_TOKEN}")
+     private String token;
+     @Value("${SF_BASE_URL}")
+     private String url;
+     @Value("${SF_VERSION}")
+     private String version;
+    */
 
-    //@Value("${SF_TOKEN}")
-    //private String token;
-
-    //@Value("${SF_BASE_URL}")
-    //private String url;
-
-    //@Value("${SF_VERSION}")
-    //private String version;
+    // set auth https://help.salesforce.com/s/articleView?id=sf.remoteaccess_terminology.htm&type=5
 
     @Value("${camel.component.salesforce.login-config.client-id}")
     private String clientId;
@@ -35,12 +40,19 @@ public class SpringCamelSalesforceLoginConfig {
 
     public SalesforceLoginConfig salesforceLoginConfig() {
         SalesforceLoginConfig salesforceLoginConfig = new SalesforceLoginConfig();
-        //salesforceLoginConfig.setUserName(username);
-        //salesforceLoginConfig.setPassword(password + token);
-        //salesforceLoginConfig.setLoginUrl(url);
+
+        /*
+        salesforceLoginConfig.setUserName(username);
+        salesforceLoginConfig.setPassword(password + token);
+        salesforceLoginConfig.setLoginUrl(url);
+        salesforceLoginConfig.setLazyLogin(false);
+        */
+
+        // set client id from value in salesforce connected apps
         salesforceLoginConfig.setClientId(clientId);
+        // set client secret from value in salesforce connected apps
         salesforceLoginConfig.setClientSecret(clientSecret);
-        //salesforceLoginConfig.setLazyLogin(false);
+        // return salesforce login bean
         return salesforceLoginConfig;
     }
 }

@@ -10,12 +10,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+// create our config bean for salesforce endpoints and apis
 @Configuration
 public class SpringCamelSalesforceEndpointConfig {
     @Bean
     public SalesforceEndpointConfig salesforceEndpointConfig() {
+        // create a camel salesforce endpoint config
         SalesforceEndpointConfig salesforceEndpointConfig = new SalesforceEndpointConfig();
+        // set api version
         salesforceEndpointConfig.setApiVersion("35.0");
+        // return endpoint config bean
         return salesforceEndpointConfig;
     }
 }

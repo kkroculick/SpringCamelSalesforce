@@ -11,11 +11,13 @@ public class SpringCamelSalesforceApplication {
 
 	public static void main(String[] args) {
 
+        // create spring application camel context
         SpringApplication.run(SpringCamelSalesforceApplication.class, args);
 
-        /*Main main = new Main();
+        // traditional camel route builder
+        /* Main main = new Main();
         main.configure().addRoutesBuilder(new MyRouteBuilder());
-        main.run(args);*/
+        main.run(args); */
     }
 
 
