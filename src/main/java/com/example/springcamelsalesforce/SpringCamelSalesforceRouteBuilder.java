@@ -1,27 +1,21 @@
 package com.example.springcamelsalesforce;
 
-import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.spring.SpringRouteBuilder;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.ComponentScan;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 
 import org.apache.camel.component.salesforce.SalesforceComponent;
-import org.apache.camel.spring.SpringCamelContext;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
-import org.apache.camel.spring.javaconfig.SingleRouteCamelConfiguration;
-import org.apache.camel.spring.javaconfig.Main;
 import org.springframework.stereotype.Component;
 
 //@component allows spring to add multiple route builder
-@Configuration
+//@Configuration
 //@Component
-@ComponentScan("com.example.springcamelsalesforce")
-public class SpringCamelSalesforceRouteConfig {
+//@ComponentScan("com.example.springcamelsalesforce")
+@Component
+public class SpringCamelSalesforceRouteBuilder {
 
     @Autowired
     @Qualifier("salesforceCamelComponent")
@@ -50,13 +44,20 @@ public class SpringCamelSalesforceRouteConfig {
 
     @Bean
     public RouteBuilder routeBuilder() {
-
         return new RouteBuilder() {
 
             @Override
             public void configure() throws Exception {
+                //errorHandler
+
                 //CamelContext context = new DefaultCamelContext();
                 //from("direct:getBasicInfo").to("salesforce:getBasicInfo").bean(SpringCamelSalesforceRouteConfig.BasicInfoBean.class);
+
+                // salesforce:operationName:topicName
+                // consume - receive events: salesforce:topic?options
+                // produce - send events: salesforce:operationName?options
+
+                // from camelTestTopic from application.properties
                 from("salesforce:{{salesforce.topic}}")
                         .unmarshal().json()
                         .choice()

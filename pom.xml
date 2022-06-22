@@ -15,7 +15,7 @@
     <description>SpringCamelSalesforce</description>
     <properties>
         <java.version>11</java.version>
-        <camel.version>3.14.2</camel.version>
+        <camel.version>3.14.3</camel.version>
     </properties>
     <dependencies>
 
