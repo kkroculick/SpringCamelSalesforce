@@ -1,5 +1,6 @@
 package com.example.springcamelsalesforce;
 
+import org.apache.camel.Endpoint;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.apache.camel.CamelContext;
@@ -50,7 +51,8 @@ public class SpringCamelSalesforceRouteBuilder {
             public void configure() throws Exception {
                 //errorHandler
 
-                //CamelContext context = new DefaultCamelContext();
+                // CamelContext context = new DefaultCamelContext();
+                // context.setDevConsole(true);
                 //from("direct:getBasicInfo").to("salesforce:getBasicInfo").bean(SpringCamelSalesforceRouteConfig.BasicInfoBean.class);
 
                 // salesforce:operationName:topicName
@@ -58,7 +60,7 @@ public class SpringCamelSalesforceRouteBuilder {
                 // produce - send events: salesforce:operationName?options
 
                 // from camelTestTopic from application.properties
-                from("salesforce:{{salesforce.topic}}")
+               /*from("salesforce:{{salesforce.topic}}")
                         .unmarshal().json()
                         .choice()
                         .when(header("CamelSalesforceEventType").isEqualTo("created"))
@@ -68,7 +70,14 @@ public class SpringCamelSalesforceRouteBuilder {
                         .when(header("CamelSalesforceEventType").isEqualTo("undeleted"))
                         .log("A Salesforce contact was undeleted: [ID:${body[Id]}, Name:${body[Name]}, Email:${body[Email]}, Phone: ${body[Phone]}]")
                         .when(header("CamelSalesforceEventType").isEqualTo("deleted"))
-                        .log("A Salesforce contact was deleted: [ID:${body[Id]}]");
+                        .log("A Salesforce contact was deleted: [ID:${body[Id]}]");*/
+                //from("direct:start").bean("beanName", "methodName");
+
+                from("timer:tick").process(new SpringCamelSalesforceProcessor()).to("log:com.example.springcamelsalesforce?level=DEBUG").to("salesforce:createSObject?sObjectName=Account");
+
+
+
+
             }
         };
 

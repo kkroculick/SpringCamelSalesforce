@@ -14,9 +14,20 @@
     <name>SpringCamelSalesforce</name>
     <description>SpringCamelSalesforce</description>
     <properties>
+
         <java.version>11</java.version>
-        <camel.version>3.14.3</camel.version>
+        <camel.version>3.17.0</camel.version>
+        <camelSalesforce.clientId>
+            3MVG9sn24bYFReCWw20Varlq4l2uop6GZttPMgZhuDHxgm101liydbDu_YbPr.Kl.cNruReD3BdAI9EEo7H5F
+        </camelSalesforce.clientId>
+        <camelSalesforce.clientSecret>81DED507C7FA827C2AFDAA2C6EBE34B430FBA4957BF2E8A495CAB30E4A49F272
+        </camelSalesforce.clientSecret>
+        <camelSalesforce.userName>kkroculick@gmail.com</camelSalesforce.userName>
+        <camelSalesforce.password>Sp$cialk9</camelSalesforce.password>
+        <camelSalesforce.loginUrl>https://login.salesforce.com</camelSalesforce.loginUrl>
+        <camelSalesforce.version>35.0</camelSalesforce.version>
     </properties>
+
     <dependencies>
 
         <dependency>
@@ -63,17 +74,32 @@
             <version>${camel.version}</version>
         </dependency>
 
+        <!-- Camel Developer Console is intended assisting developers and can display various information about a running Camel application. -->
+
         <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-console-starter</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-management-starter</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+
+        <!--<dependency>
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-spring-javaconfig-starter</artifactId>
             <version>${camel.version}</version>
-            <!--use the same version as your Camel core version-->
+            //use the same version as your Camel core version
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-spring-javaconfig</artifactId>
             <version> </version
         </dependency>-->
+
     </dependencies>
 
     <build>
@@ -81,7 +107,46 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.7</version>
+                <version>2.7.1</version>
+            </plugin>
+            <!--Camel Maven plugin creating Salesforce objects
+            https://github.com/apache/camel/tree/main/components/camel-salesforce/camel-salesforce-maven-plugin
+            -mvn camel-salesforce:generate -DcamelSalesforce.clientId=<clientid> -DcamelSalesforce.clientSecret=<clientsecret>
+           -DcamelSalesforce.userName=<username> -DcamelSalesforce.password=<password>-->
+            <plugin>
+                <groupId>org.apache.camel.maven</groupId>
+                <artifactId>camel-salesforce-maven-plugin</artifactId>
+                <version>3.17.0</version>
+                <configuration>
+                    <version>${camelSalesforce.version}</version>
+                    <clientId>${camelSalesforce.clientId}</clientId>
+                    <clientSecret>${camelSalesforce.clientSecret}</clientSecret>
+                    <userName>${camelSalesforce.userName}</userName>
+                    <password>${camelSalesforce.password}</password>
+                    <loginUrl default-value="https://login.salesforce.com">${camelSalesforce.loginUrl}</loginUrl>
+                    <includes>
+                        <include>Account</include>
+                        <include>Contact</include>
+                    </includes>
+                    <!-- <packageName></packageName>
+                     <includePattern></includePattern>
+                     <excludePattern></excludePattern>
+                     <excludes></excludes>
+                     <outputDirectory></outputDirectory>
+                     <customTypes></customTypes>
+                     <useStringsForPicklists></useStringsForPicklists>
+                     <childRelationshipNameSuffix></childRelationshipNameSuffix>
+                     <childRelationshipNameSuffix></childRelationshipNameSuffix>
+                     <httpProxyHost>${camelSalesforce.httpProxyHost}</httpProxyHost>
+                     <httpProxyPort>${camelSalesforce.httpProxyPort}</httpProxyPort>
+                     <httpProxyUsername></httpProxyUsername>
+                     <httpProxyPassword></httpProxyPassword>
+                     <httpProxyRealm></httpProxyRealm>
+                     <httpProxyAuthUri></httpProxyAuthUri>
+                     <httpProxyUseDigestAuth></httpProxyUseDigestAuth>
+                     <httpProxyIncludedAddresses></httpProxyIncludedAddresses>
+                     <httpProxyExcludedAddresses></httpProxyExcludedAddresses>-->
+                </configuration>
             </plugin>
         </plugins>
     </build>
