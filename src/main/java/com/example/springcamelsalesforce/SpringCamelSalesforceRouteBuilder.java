@@ -12,9 +12,11 @@ import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 //@component allows spring to add multiple route builder
+
 //@Configuration
 //@Component
 //@ComponentScan("com.example.springcamelsalesforce")
+
 @Component
 public class SpringCamelSalesforceRouteBuilder {
 
@@ -35,7 +37,7 @@ public class SpringCamelSalesforceRouteBuilder {
 
                 // TODO Remove let Spring handle it
                 // your custom configuration goes here
-                context.addComponent("salesforce", salesforceCamelComponent);
+                // context.addComponent("salesforce", salesforceCamelComponent);
             }
 
             @Override
@@ -63,7 +65,7 @@ public class SpringCamelSalesforceRouteBuilder {
                produce - send events: salesforce:operationName?options*/
 
                 // Camel Create Salesforce push camelTestTopic from application.properties
-                 /* from("salesforce:{{salesforce.topic}}")
+                /*from("salesforce:{{salesforce.topic}}")
                         .unmarshal().json()
                         .choice()
                         .when(header("CamelSalesforceEventType").isEqualTo("created"))
