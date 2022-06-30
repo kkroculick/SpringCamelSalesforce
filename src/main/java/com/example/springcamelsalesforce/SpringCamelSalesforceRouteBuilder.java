@@ -32,6 +32,8 @@ public class SpringCamelSalesforceRouteBuilder {
 
             @Override
             public void beforeApplicationStart(CamelContext context) {
+
+                // TODO Remove let Spring handle it
                 // your custom configuration goes here
                 context.addComponent("salesforce", salesforceCamelComponent);
             }
@@ -49,18 +51,19 @@ public class SpringCamelSalesforceRouteBuilder {
 
             @Override
             public void configure() throws Exception {
-                //errorHandler
+                //TODO Error Handler
 
-                // CamelContext context = new DefaultCamelContext();
-                // context.setDevConsole(true);
-                //from("direct:getBasicInfo").to("salesforce:getBasicInfo").bean(SpringCamelSalesforceRouteConfig.BasicInfoBean.class);
+                // Create custom Camel Context
+                /* CamelContext context = new DefaultCamelContext();
+                context.setDevConsole(true);
+                from("direct:getBasicInfo").to("salesforce:getBasicInfo").bean(SpringCamelSalesforceRouteConfig.BasicInfoBean.class); */
 
-                // salesforce:operationName:topicName
-                // consume - receive events: salesforce:topic?options
-                // produce - send events: salesforce:operationName?options
+                /*salesforce:operationName:topicName
+               consume - receive events: salesforce:topic?options
+               produce - send events: salesforce:operationName?options*/
 
-                // from camelTestTopic from application.properties
-               /*from("salesforce:{{salesforce.topic}}")
+                // Camel Create Salesforce push camelTestTopic from application.properties
+                 /* from("salesforce:{{salesforce.topic}}")
                         .unmarshal().json()
                         .choice()
                         .when(header("CamelSalesforceEventType").isEqualTo("created"))
@@ -71,12 +74,11 @@ public class SpringCamelSalesforceRouteBuilder {
                         .log("A Salesforce contact was undeleted: [ID:${body[Id]}, Name:${body[Name]}, Email:${body[Email]}, Phone: ${body[Phone]}]")
                         .when(header("CamelSalesforceEventType").isEqualTo("deleted"))
                         .log("A Salesforce contact was deleted: [ID:${body[Id]}]");*/
-                //from("direct:start").bean("beanName", "methodName");
-
-                from("timer:tick").process(new SpringCamelSalesforceProcessor()).to("log:com.example.springcamelsalesforce?level=DEBUG").to("salesforce:createSObject?sObjectName=Account");
 
 
-
+                // Camel Create hardcoded Account SObject
+                // from("timer:tick").process(new SpringCamelSalesforceProcessor()).to("log:com.example.springcamelsalesforce?level=DEBUG").to("salesforce:createSObject?sObjectName=Account");
+                // from("timer:tick").bean(SpringCamelSalesforceBean.class).to("log:com.example.springcamelsalesforce?level=DEBUG").to("salesforce:createSObject?sObjectName=Account");
 
             }
         };
