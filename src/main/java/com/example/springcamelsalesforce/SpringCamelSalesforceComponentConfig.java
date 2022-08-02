@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Import;
 @Import({SalesforceEndpointConfig.class, SalesforceLoginConfig.class})
 public class SpringCamelSalesforceComponentConfig {
 
-
     // inject endpoint config
     @Autowired
     SalesforceEndpointConfig salesforceEndpointConfig;

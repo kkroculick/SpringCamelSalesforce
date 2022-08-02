@@ -15,22 +15,7 @@ public class SpringCamelSalesforceLoginConfig {
 
     /* salesforce supports three different ways of login
     https://help.salesforce.com/s/articleView?id=sf.connected_app_manage.htm&type=5
-    */
-
-    /*
-     @Value("${}")
-     private String username;
-     @Value("${}")
-     private String password;
-     @Value("${SF_TOKEN}")
-     private String token;
-     @Value("${SF_BASE_URL}")
-     private String url;
-     @Value("${SF_VERSION}")
-     private String version;
-    */
-
-    // set auth https://help.salesforce.com/s/articleView?id=sf.remoteaccess_terminology.htm&type=5
+    https://help.salesforce.com/s/articleView?id=sf.remoteaccess_terminology.htm&type=5*/
 
     @Value("${camel.component.salesforce.login-config.client-id}")
     private String clientId;

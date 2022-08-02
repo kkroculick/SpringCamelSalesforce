@@ -13,10 +13,11 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>SpringCamelSalesforce</name>
     <description>SpringCamelSalesforce</description>
+
     <properties>
 
         <java.version>11</java.version>
-        <camel.version>3.17.0</camel.version>
+        <camel.version>3.18.0</camel.version>
         <camelSalesforce.clientId>
             3MVG9sn24bYFReCWw20Varlq4l2uop6GZttPMgZhuDHxgm101liydbDu_YbPr.Kl.cNruReD3BdAI9EEo7H5F
         </camelSalesforce.clientId>
@@ -26,27 +27,17 @@
         <camelSalesforce.password>Sp$cialk9</camelSalesforce.password>
         <camelSalesforce.loginUrl>https://login.salesforce.com</camelSalesforce.loginUrl>
         <camelSalesforce.version>35.0</camelSalesforce.version>
+
     </properties>
 
     <dependencies>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
+        <!-- Camel Core -->
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-spring-boot-starter</artifactId>
             <version>${camel.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -56,58 +47,88 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <!--Spring Boot Web for REST-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--Camel Spring Test & JUnit-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!--salesforce-->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test-spring-junit5</artifactId>
+            <version>${camel.version}</version> <!-- use the same version as your Camel core version -->
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Camel Salesforce-->
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-salesforce-starter</artifactId>
             <version>${camel.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.camel/camel-jackson-starter -->
+        <!-- Camel Jackson JSON\XML -->
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-jackson-starter</artifactId>
             <version>${camel.version}</version>
         </dependency>
 
-        <!-- Camel Developer Console is intended assisting developers and can display various information about a running Camel application. -->
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-csv-starter</artifactId>
+            <version>${camel.version}</version>
+            <!-- use the same version as your Camel core version -->
+        </dependency>
 
+        <!-- Camel Streams StdIn\Stdout\StdErr -->
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-stream-starter</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+
+        <!-- Camel Kafka Producer\Consumer-->
+        <dependency>
+            <groupId>org.apache.camel.springboot</groupId>
+            <artifactId>camel-kafka-starter</artifactId>
+            <version>${camel.version}</version>
+            <!-- use the same version as your Camel core version -->
+        </dependency>
+
+        <!-- Camel Developer Console is intended assisting developers and can display various information about a running Camel application. -->
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-console-starter</artifactId>
             <version>${camel.version}</version>
         </dependency>
 
+        <!-- Camel Management -->
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-management-starter</artifactId>
             <version>${camel.version}</version>
         </dependency>
 
-        <!-- Camel logging -->
+        <!-- Camel Logging -->
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-log-starter</artifactId>
             <version>${camel.version}</version>
             <!-- use the same version as your Camel core version -->
         </dependency>
-
-        <!--<dependency>
-            <groupId>org.apache.camel.springboot</groupId>
-            <artifactId>camel-spring-javaconfig-starter</artifactId>
-            <version>${camel.version}</version>
-            //use the same version as your Camel core version
-        </dependency>
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-spring-javaconfig</artifactId>
-            <version> </version
-        </dependency>-->
-
     </dependencies>
 
     <build>
@@ -117,10 +138,15 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.7.1</version>
             </plugin>
+
             <!--Camel Maven plugin creating Salesforce objects
             https://github.com/apache/camel/tree/main/components/camel-salesforce/camel-salesforce-maven-plugin
-            -mvn camel-salesforce:generate -DcamelSalesforce.clientId=<clientid> -DcamelSalesforce.clientSecret=<clientsecret>
-           -DcamelSalesforce.userName=<username> -DcamelSalesforce.password=<password>-->
+            -mvn camel-salesforce:generate
+            -DcamelSalesforce.clientId=<clientid>
+            -DcamelSalesforce.clientSecret=<clientsecret>
+            -DcamelSalesforce.userName=<username>
+            -DcamelSalesforce.password=<password>-->
+
             <plugin>
                 <groupId>org.apache.camel.maven</groupId>
                 <artifactId>camel-salesforce-maven-plugin</artifactId>
@@ -156,6 +182,7 @@
                      <httpProxyExcludedAddresses></httpProxyExcludedAddresses>-->
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 

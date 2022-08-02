@@ -1,6 +1,9 @@
 package com.example.springcamelsalesforce;
 
 import org.apache.camel.Endpoint;
+import org.apache.camel.model.dataformat.CsvDataFormat;
+import org.apache.camel.model.dataformat.JsonDataFormat;
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.apache.camel.CamelContext;
@@ -53,10 +56,12 @@ public class SpringCamelSalesforceRouteBuilder {
 
             @Override
             public void configure() throws Exception {
-                //TODO Error Handler
+                //global error handler
+                errorHandler(deadLetterChannel("seda:error"));
 
                 // Create custom Camel Context
                 /* CamelContext context = new DefaultCamelContext();
+
                 context.setDevConsole(true);
                 from("direct:getBasicInfo").to("salesforce:getBasicInfo").bean(SpringCamelSalesforceRouteConfig.BasicInfoBean.class); */
 
@@ -79,8 +84,43 @@ public class SpringCamelSalesforceRouteBuilder {
 
 
                 // Camel Create hardcoded Account SObject
+
                 // from("timer:tick").process(new SpringCamelSalesforceProcessor()).to("log:com.example.springcamelsalesforce?level=DEBUG").to("salesforce:createSObject?sObjectName=Account");
                 // from("timer:tick").bean(SpringCamelSalesforceBean.class).to("log:com.example.springcamelsalesforce?level=DEBUG").to("salesforce:createSObject?sObjectName=Account");
+
+                // CSV to Salesforce salesforce:operationName?options
+
+                String customerFile = "single-customer.csv";
+                // from("stream:file?fileName=src/main/resources/static/northwind.csv&scanStream=true&scanStreamDelay=1000").to("stream:out");
+                // from("file://./src/main/resources/static?fileName=" + customerFile +"&noop=true").to("stream:out");
+                CsvDataFormat csv = new CsvDataFormat();
+               // csv.setCaptureHeaderRecord();
+                // Set up a simple JSON output format
+                JsonDataFormat json = new JsonDataFormat(JsonLibrary.Jackson);
+
+                from("file://./src/main/resources/static?fileName=" + customerFile +"&noop=true")
+                      //  .split(body().tokenize("\n")).unmarshal(csv).marshal(json)
+                        //.split(body().tokenize("\n"))
+                        .unmarshal(csv)
+                        .process(new SpringCamelSalesforceProcessor())
+                .to("mock:result");
+                       //.to("salesforce:createSObject?sObjectName=Account");
+
+                // Kafka to Salesforce
+                /*String TOPIC = "accounts";
+                from("kafka:" + TOPIC + "?brokers=localhost:9092")
+                        .log("Message received from Kafka : ${body}")
+                        .log("    on the topic ${headers[kafka.TOPIC]}")
+                        .log("    on the partition ${headers[kafka.PARTITION]}")
+                        .log("    with the offset ${headers[kafka.OFFSET]}")
+                        .log("    with the key ${headers[kafka.KEY]}")
+                        .to("stream:out");*/
+
+
+                //TODO Kafka
+                //TODO File/Batch
+                //TODO REST
+                //TODO ODATA
 
             }
         };

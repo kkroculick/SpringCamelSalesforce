@@ -26,7 +26,7 @@ public class SpringCamelSalesforceBean {
         account.setPhone("5555551212");
         account.setOwnerId("0058Y00000APoqfQAD");
 
-        // ObjectMapper mapper = new ObjectMapper();
+        //ObjectMapper mapper = new ObjectMapper();
         message.setBody(account);
 
     }

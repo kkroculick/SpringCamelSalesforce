@@ -14,8 +14,11 @@ public class SpringCamelSalesforceApplication {
         // create spring application camel context
         SpringApplication.run(SpringCamelSalesforceApplication.class, args);
 
-        // traditional camel route builder
-        /* Main main = new Main();
+        /* Traditional camel route builder with Spring
+        Main main = new Main();
+        // have SpringCamelSalesforceApplication extend CamelConfiguration
+        // change annotations to @Configuraiton and @ComponentsScan
+        main.setConfigClass(SpringCamelSalesforceApplicaiton)
         main.configure().addRoutesBuilder(new MyRouteBuilder());
         main.run(args); */
     }
