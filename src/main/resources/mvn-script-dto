@@ -1,3 +1,0 @@
-mvn camel-salesforce:generate 
--DcamelSalesforce.clientId="3MVG9sn24bYFReCWw20Varlq4l2uop6GZttPMgZhuDHxgm101liydbDu_YbPr.Kl.cNruReD3BdAI9EEo7H5F" 
--DcamelSalesforce.clientSecret="81DED507C7FA827C2AFDAA2C6EBE34B430FBA4957BF2E8A495CAB30E4A49F272" 
